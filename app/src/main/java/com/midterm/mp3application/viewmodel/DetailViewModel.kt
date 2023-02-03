@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.midterm.mp3application.data.DataSource
 import com.midterm.mp3application.data.Song
 
-class DetailViewModel(private val dataSource: DataSource): ViewModel() {
+class DetailViewModel(private val dataSource: DataSource) : ViewModel() {
 
     fun getSongById(id: Int): Song? = dataSource.getSongById(id)
 
@@ -20,9 +20,9 @@ class DetailViewModel(private val dataSource: DataSource): ViewModel() {
 }
 
 
-class DetailViewModelFactory(private val context: Context): ViewModelProvider.Factory {
+class DetailViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(DetailViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
             return DetailViewModel(DataSource.getDataSource(context.resources)) as T
         }

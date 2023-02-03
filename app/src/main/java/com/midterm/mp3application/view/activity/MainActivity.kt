@@ -3,7 +3,7 @@ package com.midterm.mp3application.view.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayoutMediator
-import com.midterm.mp3application.adapter.MyViewPagerAdapter
+import com.midterm.mp3application.view.adapter.MyViewPagerAdapter
 import com.midterm.mp3application.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

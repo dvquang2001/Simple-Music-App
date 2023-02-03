@@ -1,4 +1,4 @@
-package com.midterm.mp3application.adapter
+package com.midterm.mp3application.view.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

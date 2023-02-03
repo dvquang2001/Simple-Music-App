@@ -36,7 +36,8 @@
                 android:value="" />
         </activity>
 
-        <service android:name=".service.SoundService" />
+        <service android:name=".service.SongService" />
+        <receiver android:name=".service.SongReceiver" />
     </application>
 
 </manifest>

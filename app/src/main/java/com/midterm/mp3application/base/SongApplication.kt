@@ -4,14 +4,13 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import com.midterm.mp3application.other.Constant.CHANNEL_ID
 
-const val CHANNEL_ID = "CHANNEL_MUSIC_APP"
 
 class SongApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
         createNotificationChannel()
     }
 

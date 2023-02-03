@@ -4,12 +4,11 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midterm.mp3application.R
-import com.midterm.mp3application.adapter.SongAdapter
 import com.midterm.mp3application.base.BaseFragment
-import com.midterm.mp3application.data.KEY_SONG_ID
 import com.midterm.mp3application.databinding.FragmentSongListBinding
-import com.midterm.mp3application.service.SoundService
+import com.midterm.mp3application.other.Constant.KEY_SONG_ID
 import com.midterm.mp3application.view.activity.DetailActivity
+import com.midterm.mp3application.view.adapter.SongAdapter
 import com.midterm.mp3application.viewmodel.SongViewModel
 import com.midterm.mp3application.viewmodel.SongViewModelFactory
 
@@ -32,7 +31,9 @@ class SongListFragment : BaseFragment<FragmentSongListBinding>(R.layout.fragment
 
     override fun initObserver() {
         viewModel.songsLiveData.observe(viewLifecycleOwner) { songs ->
-            adapter?.submitList(songs)
+            adapter?.submitList(songs.filter { song ->
+                !song.isDelete
+            })
         }
     }
 
@@ -40,7 +41,7 @@ class SongListFragment : BaseFragment<FragmentSongListBinding>(R.layout.fragment
     }
 
     override fun onDestroy() {
-        activity?.stopService(Intent(activity, SoundService::class.java))
+//        activity?.stopService(Intent(activity, SongService::class.java))
         super.onDestroy()
     }
 

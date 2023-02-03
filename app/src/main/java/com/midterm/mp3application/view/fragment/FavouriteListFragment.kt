@@ -4,10 +4,10 @@ import android.content.Intent
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.midterm.mp3application.R
-import com.midterm.mp3application.adapter.SongAdapter
+import com.midterm.mp3application.view.adapter.SongAdapter
 import com.midterm.mp3application.base.BaseFragment
-import com.midterm.mp3application.data.KEY_SONG_ID
 import com.midterm.mp3application.databinding.FragmentFavouriteListBinding
+import com.midterm.mp3application.other.Constant.KEY_SONG_ID
 import com.midterm.mp3application.view.activity.DetailActivity
 import com.midterm.mp3application.viewmodel.FavouriteListViewModel
 import com.midterm.mp3application.viewmodel.FavouriteListViewModelFactory

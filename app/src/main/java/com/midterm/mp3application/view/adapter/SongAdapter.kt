@@ -1,4 +1,4 @@
-package com.midterm.mp3application.adapter
+package com.midterm.mp3application.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

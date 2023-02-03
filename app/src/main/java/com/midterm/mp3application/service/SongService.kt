@@ -11,11 +11,14 @@ import android.os.IBinder
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.midterm.mp3application.R
-import com.midterm.mp3application.base.CHANNEL_ID
 import com.midterm.mp3application.data.*
+import com.midterm.mp3application.other.Constant
+import com.midterm.mp3application.other.Constant.ACTION_TO_RECEIVER
+import com.midterm.mp3application.other.Constant.CHANNEL_ID
+import com.midterm.mp3application.other.Constant.KEY_SELECTED_SONG
 import com.midterm.mp3application.view.activity.MainActivity
 
-class SoundService : Service() {
+class SongService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var selectedSong: Song
 
@@ -31,11 +34,18 @@ class SoundService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val bundle = intent?.extras
-        selectedSong = bundle?.get(KEY_SELECTED_SONG) as Song
+        val song = bundle?.get(KEY_SELECTED_SONG)
 
-        releaseMediaPlayer()
-        startSong()
-        sendNotification()
+        if(song != null) {
+            selectedSong = song as Song
+
+            releaseMediaPlayer()
+            startSong()
+            sendNotification()
+        }
+
+        val actionMusic = intent?.getIntExtra(Constant.ACTION_RECEIVER_TO_SERVICE,0)
+        actionMusic?.let { handleAction(it) }
 
         return START_NOT_STICKY
     }
@@ -54,11 +64,11 @@ class SoundService : Service() {
 
         if(isPlaying) {
             remoteViews.setOnClickPendingIntent(R.id.img_play_or_pause,getPendingIntent(this,ACTION_PAUSE))
-            remoteViews.setImageViewResource(R.id.img_play_or_pause, R.drawable.ic_play)
+            remoteViews.setImageViewResource(R.id.img_play_or_pause, R.drawable.ic_pause)
         }
         else {
             remoteViews.setOnClickPendingIntent(R.id.img_play_or_pause,getPendingIntent(this,ACTION_RESUME))
-            remoteViews.setImageViewResource(R.id.img_play_or_pause, R.drawable.ic_pause)
+            remoteViews.setImageViewResource(R.id.img_play_or_pause, R.drawable.ic_play)
         }
 
         remoteViews.setOnClickPendingIntent(R.id.img_clear,getPendingIntent(this,ACTION_CLEAR))
@@ -74,8 +84,11 @@ class SoundService : Service() {
         }
     }
 
-    private fun getPendingIntent(context: Context,action: Int): PendingIntent {
 
+    private fun getPendingIntent(context: Context,action: Int): PendingIntent {
+        val intent = Intent(this,SongReceiver::class.java)
+        intent.putExtra(ACTION_TO_RECEIVER,action)
+        return PendingIntent.getBroadcast(context.applicationContext,action,intent,PendingIntent.FLAG_UPDATE_CURRENT)
     }
 
     private fun handleAction(action: Int) {
@@ -90,6 +103,7 @@ class SoundService : Service() {
         if(isPlaying) {
             mediaPlayer.pause()
             isPlaying = false
+            sendNotification()
         }
     }
 
@@ -97,6 +111,7 @@ class SoundService : Service() {
         if(!isPlaying) {
             mediaPlayer.start()
             isPlaying = true
+            sendNotification()
         }
     }
 

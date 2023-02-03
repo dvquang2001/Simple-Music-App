@@ -3,9 +3,6 @@ package com.midterm.mp3application.data
 import android.content.res.Resources
 import com.midterm.mp3application.R
 
-const val KEY_SONG_ID = "SongId"
-const val KEY_SELECTED_SONG = "SelectedSong"
-
 fun songList(resources: Resources): List<Song> =
     listOf(
         Song(
